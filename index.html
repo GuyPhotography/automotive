@@ -18,16 +18,21 @@
         }
         .font-cinzel { font-family: 'Cinzel', serif; }
 
-        /* Custom Cursor for desktop devices only */
+        /* Custom Wheel Cursor for desktop devices only */
         @media (pointer: fine) {
             body { cursor: none; }
-            #cursor-dot {
-                width: 8px; height: 8px; background-color: #ffffff; border-radius: 50%;
-                position: fixed; pointer-events: none; z-index: 9999;
-                transform: translate(-50%, -50%); transition: transform 0.1s ease;
+            #cursor-wheel {
+                width: 24px;
+                height: 24px;
+                position: fixed;
+                pointer-events: none;
+                z-index: 9999;
+                transform: translate(-50%, -50%);
+                transition: transform 0.08s linear;
+                filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.3));
             }
             #cursor-ring {
-                width: 40px; height: 40px; border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 50%;
+                width: 44px; height: 44px; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 50%;
                 position: fixed; pointer-events: none; z-index: 9998;
                 transform: translate(-50%, -50%); transition: transform 0.15s ease-out, width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
                 display: flex; align-items: center; justify-content: center;
@@ -38,12 +43,12 @@
             }
             body.hover-target #cursor-ring { width: 85px; height: 85px; background-color: #ffffff; border-color: #ffffff; }
             body.hover-target #cursor-text { opacity: 1; }
-            body.hover-target #cursor-dot { opacity: 0; }
+            body.hover-target #cursor-wheel { opacity: 0; }
         }
 
         /* Disable custom cursor on touch devices */
         @media (pointer: coarse) {
-            #cursor-dot, #cursor-ring { display: none !important; }
+            #cursor-wheel, #cursor-ring { display: none !important; }
             body { cursor: auto !important; }
         }
 
@@ -65,15 +70,23 @@
 </head>
 <body class="selection:bg-white selection:text-black">
 
-    <!-- Cursor Elements -->
-    <div id="cursor-dot"></div>
+    <div id="cursor-wheel">
+        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-white">
+            <circle cx="50" cy="50" r="46" stroke="currentColor" stroke-width="8" />
+            <circle cx="50" cy="50" r="38" stroke="currentColor" stroke-width="3" stroke-dasharray="3 3" />
+            <circle cx="50" cy="50" r="10" fill="currentColor" />
+            <line x1="50" y1="50" x2="50" y2="12" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+            <line x1="50" y1="50" x2="86" y2="38" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+            <line x1="50" y1="50" x2="72" y2="81" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+            <line x1="50" y1="50" x2="28" y2="81" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+            <line x1="50" y1="50" x2="14" y2="38" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+        </svg>
+    </div>
     <div id="cursor-ring"><span id="cursor-text">VIEW</span></div>
 
-    <!-- Header Navigation -->
     <header class="fixed top-0 left-0 w-full z-40 mix-blend-difference px-6 md:px-12 py-5 md:py-6 flex justify-between items-center">
         <a href="#" class="font-cinzel text-lg md:text-xl tracking-[0.25em] font-bold uppercase text-white z-50">GuyRDT</a>
         
-        <!-- Desktop Nav -->
         <nav class="hidden md:flex space-x-10 text-xs tracking-[0.2em] font-medium uppercase text-white">
             <a href="#stills" class="hover:text-neutral-400 transition-colors">Stills</a>
             <a href="#video" class="hover:text-neutral-400 transition-colors">Video</a>
@@ -81,7 +94,6 @@
             <a href="#contact" class="hover:text-neutral-400 transition-colors">Contact</a>
         </nav>
 
-        <!-- Mobile Menu Toggle Button -->
         <button id="menu-btn" onclick="toggleMobileMenu()" class="md:hidden text-white focus:outline-none z-50 p-2">
             <svg id="menu-icon" class="w-6 h-6 fill-current" viewBox="0 0 24 24">
                 <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
@@ -89,7 +101,6 @@
         </button>
     </header>
 
-    <!-- Mobile Navigation Overlay -->
     <div id="mobile-menu" class="fixed inset-0 bg-black/95 backdrop-blur-xl z-30 hidden flex flex-col justify-center items-center space-y-8 text-center p-6">
         <a href="#stills" onclick="toggleMobileMenu()" class="font-cinzel text-2xl tracking-[0.2em] text-white uppercase">Stills</a>
         <a href="#video" onclick="toggleMobileMenu()" class="font-cinzel text-2xl tracking-[0.2em] text-white uppercase">Video</a>
@@ -97,17 +108,14 @@
         <a href="#contact" onclick="toggleMobileMenu()" class="font-cinzel text-2xl tracking-[0.2em] text-white uppercase">Contact</a>
     </div>
 
-    <!-- Hero Section -->
     <section class="relative h-screen w-full overflow-hidden flex items-end pb-12 md:pb-20 px-6 md:px-16">
         
-        <!-- Mobile Hero Image (Fixed background to prevent URL bar jumping) -->
         <div class="absolute inset-0 w-full h-full z-0 block md:hidden" style="position: fixed; height: 100vh; height: 100dvh;">
             <img src="./drift event finished 2026-11.jpg" 
                  alt="Drift Event Mobile by Guy Arditi" 
                  class="w-full h-full object-cover brightness-[0.75] contrast-[1.05]">
         </div>
 
-        <!-- Desktop Hero Image (Visible ONLY on computers, with Parallax) -->
         <div id="hero-bg" class="absolute inset-0 w-full h-full z-0 hidden md:block scale-110 will-change-transform">
             <img id="hero-img"
                  src="./Hero shot.jpg" 
@@ -124,7 +132,6 @@
         </div>
     </section>
 
-    <!-- Stills Section -->
     <section id="stills" class="py-16 md:py-28 px-6 md:px-16 border-t border-neutral-900 bg-[#0a0a0a] relative z-10">
         <div class="max-w-7xl mx-auto">
             <div class="mb-8 md:mb-16">
@@ -134,7 +141,6 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                 
-                <!-- Project 1 -->
                 <div class="card-image-wrapper group cursor-pointer hover-trigger" 
                      data-cursor="VIEW PROJECT"
                      onclick="openProjectModal('DRIFT NIGHT', 'Tandem Action & Track Shoot', [
@@ -154,7 +160,6 @@
                     </div>
                 </div>
 
-                <!-- Project 2 -->
                 <div class="card-image-wrapper group cursor-pointer hover-trigger" 
                      data-cursor="VIEW PROJECT"
                      onclick="openProjectModal('LAMBORGHINI GALLARDO', 'Street Shoot', [
@@ -169,7 +174,6 @@
                     </div>
                 </div>
 
-                <!-- Project 3 -->
                 <div class="card-image-wrapper group cursor-pointer hover-trigger" 
                      data-cursor="VIEW PROJECT"
                      onclick="openProjectModal('FERRARI F8 TRIBUTO', 'Sunset Dynamic Motion', [
@@ -188,7 +192,6 @@
         </div>
     </section>
 
-    <!-- Video Section -->
     <section id="video" class="py-16 md:py-28 px-6 md:px-16 border-t border-neutral-900 bg-black relative z-10">
         <div class="max-w-7xl mx-auto">
             <div class="mb-8 md:mb-16">
@@ -197,7 +200,6 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Video 1 -->
                 <div class="card-image-wrapper group cursor-pointer hover-trigger" 
                      data-cursor="PLAY FILM"
                      onclick="openVideoModal('https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'COMMERCIAL REEL 2026')">
@@ -208,165 +210,4 @@
                              alt="Commercial Reel">
                         <div class="absolute inset-0 flex items-center justify-center">
                             <div class="w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/40 bg-black/40 backdrop-blur-md flex items-center justify-center">
-                                <svg class="w-4 h-4 md:w-5 md:h-5 fill-current text-white translate-x-0.5" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-3 md:mt-4 flex justify-between items-center">
-                        <h3 class="font-cinzel text-xs md:text-base font-bold tracking-wider text-white">COMMERCIAL REEL 2026</h3>
-                        <span class="text-[9px] md:text-[10px] text-neutral-500 tracking-widest uppercase">Play MP4</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="py-16 md:py-28 px-6 md:px-16 border-t border-neutral-900 bg-[#0a0a0a] relative z-10">
-        <div class="max-w-4xl mx-auto">
-            <span class="text-[10px] font-mono uppercase tracking-[0.3em] text-neutral-500 block mb-3">03 / STATEMENT</span>
-            <h2 class="font-cinzel text-2xl md:text-5xl font-bold tracking-wide mb-6 md:mb-8">DRIVEN BY MOTION</h2>
-            <p class="text-sm md:text-xl text-neutral-300 font-light leading-relaxed mb-4 md:mb-6">
-                Specializing in dynamic automotive photography and filmmaking. Based in Northern Israel, capturing visual stories for brands, car events, and private collectors—from high-octane track action to editorial stills.
-            </p>
-            <p class="text-xs md:text-sm text-neutral-500 leading-relaxed max-w-2xl">
-                Every vehicle has a distinct design language. My focus is on controlled lighting, dynamic composition, and seamless movement to create visual stories for brands, collectors, and enthusiasts worldwide.
-            </p>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-16 md:py-28 px-6 md:px-16 border-t border-neutral-900 bg-black relative z-10">
-        <div class="max-w-4xl mx-auto text-center">
-            <span class="text-[10px] font-mono uppercase tracking-[0.3em] text-neutral-500 block mb-3">04 / INQUIRIES</span>
-            <h2 class="font-cinzel text-3xl md:text-6xl font-bold tracking-wide mb-8">LET'S CREATE</h2>
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=guyrdt1@gmail.com" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-8 py-4 bg-white text-black text-xs font-semibold tracking-[0.2em] uppercase">guyrdt1@gmail.com</a>
-                <a href="https://www.instagram.com/guy.rdt/" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-8 py-4 border border-neutral-800 text-white text-xs font-semibold tracking-[0.2em] uppercase hover:bg-neutral-900 transition-colors">Instagram ↗</a>
-            </div>
-            <p class="text-[9px] md:text-[10px] text-neutral-600 tracking-widest uppercase mt-16 md:mt-20">© GUY ARDITI. ALL RIGHTS RESERVED.</p>
-        </div>
-    </section>
-
-    <!-- Project Gallery Modal -->
-    <div id="project-modal" class="fixed inset-0 z-50 modal-blur hidden flex flex-col justify-between p-4 md:p-12 overflow-y-auto">
-        <div class="flex justify-between items-center border-b border-neutral-800 pb-4">
-            <div>
-                <h3 id="modal-title" class="font-cinzel text-base md:text-xl font-bold text-white"></h3>
-                <p id="modal-subtitle" class="text-[9px] md:text-[10px] text-neutral-400 tracking-widest uppercase"></p>
-            </div>
-            <button onclick="closeProjectModal()" class="text-white text-xs px-3 py-1.5 md:px-4 md:py-2 border border-neutral-800">Close ✕</button>
-        </div>
-        <div id="modal-images" class="my-6 md:my-8 space-y-4 md:space-y-6 max-w-4xl mx-auto w-full"></div>
-    </div>
-
-    <!-- Native Video Player Modal -->
-    <div id="video-modal" class="fixed inset-0 z-50 modal-blur hidden flex items-center justify-center p-3 md:p-4">
-        <div class="relative w-full max-w-4xl bg-black border border-neutral-800 p-2">
-            <div class="flex justify-between items-center mb-2 px-2">
-                <span id="video-title" class="font-cinzel text-xs font-bold text-white"></span>
-                <button onclick="closeVideoModal()" class="text-white text-xs">Close ✕</button>
-            </div>
-            <video id="native-video-player" controls playsinline class="w-full aspect-video bg-black">
-                <source src="" type="video/mp4">
-            </video>
-        </div>
-    </div>
-
-    <!-- Scripts -->
-    <script>
-        const cursorDot = document.getElementById('cursor-dot');
-        const cursorRing = document.getElementById('cursor-ring');
-        const cursorText = document.getElementById('cursor-text');
-        const heroBg = document.getElementById('hero-bg');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        /* Mobile Menu Toggle */
-        function toggleMobileMenu() {
-            const isOpen = !mobileMenu.classList.contains('hidden');
-            if (isOpen) {
-                mobileMenu.classList.add('hidden');
-                document.body.style.overflow = 'auto';
-            } else {
-                mobileMenu.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-            }
-        }
-
-        /* Desktop ONLY Parallax Effect */
-        const isDesktop = window.matchMedia('(pointer: fine)').matches;
-
-        if (isDesktop) {
-            let latestScrollY = 0;
-            let ticking = false;
-
-            function updateDesktopParallax() {
-                if (heroBg && latestScrollY <= window.innerHeight * 1.2) {
-                    const translateY = latestScrollY * 0.4;
-                    heroBg.style.transform = `translate3d(0, ${translateY}px, 0) scale(1.1)`;
-                }
-                ticking = false;
-            }
-
-            window.addEventListener('scroll', () => {
-                latestScrollY = window.scrollY;
-                if (!ticking) {
-                    window.requestAnimationFrame(updateDesktopParallax);
-                    ticking = true;
-                }
-            }, { passive: true });
-
-            /* Custom Cursor Event Handlers */
-            window.addEventListener('mousemove', (e) => {
-                if (cursorDot) {
-                    cursorDot.style.left = `${e.clientX}px`; cursorDot.style.top = `${e.clientY}px`;
-                    cursorRing.style.left = `${e.clientX}px`; cursorRing.style.top = `${e.clientY}px`;
-                }
-            });
-
-            document.querySelectorAll('.hover-trigger').forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    document.body.classList.add('hover-target');
-                    if (cursorText) cursorText.innerText = el.getAttribute('data-cursor') || 'VIEW';
-                });
-                el.addEventListener('mouseleave', () => document.body.classList.remove('hover-target'));
-            });
-        }
-
-        function openProjectModal(title, subtitle, images) {
-            document.getElementById('modal-title').innerText = title;
-            document.getElementById('modal-subtitle').innerText = subtitle;
-            const container = document.getElementById('modal-images');
-            container.innerHTML = '';
-            images.forEach(src => {
-                const img = document.createElement('img');
-                img.src = src; img.className = 'w-full h-auto border border-neutral-800';
-                container.appendChild(img);
-            });
-            document.getElementById('project-modal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeProjectModal() {
-            document.getElementById('project-modal').classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
-
-        function openVideoModal(videoSrc, title) {
-            const player = document.getElementById('native-video-player');
-            document.getElementById('video-title').innerText = title;
-            player.src = videoSrc;
-            document.getElementById('video-modal').classList.remove('hidden');
-            player.play();
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeVideoModal() {
-            const player = document.getElementById('native-video-player');
-            player.pause(); player.src = '';
-            document.getElementById('video-modal').classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
-    </script>
-</body>
-</html>
+                                <svg class="w-4 h-4 md:w-5 md:h-5 fill-current text-white translate-x-0.5" viewBox="0 0 24 24"><path d="M8
