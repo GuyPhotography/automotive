@@ -97,14 +97,19 @@
         <a href="#contact" onclick="toggleMobileMenu()" class="font-cinzel text-2xl tracking-[0.2em] text-white uppercase">Contact</a>
     </div>
 
-    <!-- Hero Section -->
+    <!-- Hero Section (Responsive Picture for Mobile vs Desktop) -->
     <section class="relative h-[100dvh] w-full overflow-hidden flex items-end pb-12 md:pb-20 px-6 md:px-16">
         <div id="hero-bg" class="absolute inset-0 w-full h-full z-0 md:scale-110 will-change-transform">
-            <img id="hero-img"
-                 src="./Hero shot.jpg" 
-                 onerror="if(this.src.indexOf('hero%20shot.jpg') !== -1){ this.src='./hero shot.jpg'; } else if(this.src.indexOf('hero.jpg') === -1){ this.src='./hero.jpg'; }"
-                 alt="Drift Night by Guy Arditi" 
-                 class="w-full h-full object-cover brightness-[0.75] contrast-[1.05]">
+            <picture>
+                <!-- Mobile Image (Loads on screens smaller than 768px, NO parallax) -->
+                <source media="(max-width: 767px)" srcset="./drift event finished 2026-11.jpg">
+                <!-- Desktop Image (Default / Larger screens, with Parallax) -->
+                <img id="hero-img"
+                     src="./Hero shot.jpg" 
+                     onerror="if(this.src.indexOf('hero%20shot.jpg') !== -1){ this.src='./hero shot.jpg'; } else if(this.src.indexOf('hero.jpg') === -1){ this.src='./hero.jpg'; }"
+                     alt="Automotive Hero by Guy Arditi" 
+                     class="w-full h-full object-cover brightness-[0.75] contrast-[1.05]">
+            </picture>
         </div>
         <div class="relative z-10 max-w-4xl">
             <p class="text-[10px] md:text-xs uppercase tracking-[0.3em] md:tracking-[0.4em] text-neutral-400 mb-2 md:mb-3 font-medium">Automotive Photo & Video</p>
