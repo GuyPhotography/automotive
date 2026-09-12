@@ -9,21 +9,57 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: #0a0a0a;
             color: #e5e5e5;
             -webkit-tap-highlight-color: transparent;
-            overflow-x: hidden;
         }
         .font-cinzel { font-family: 'Cinzel', serif; }
 
-        /* Smooth Parallax GPU Acceleration */
-        .parallax-container {
+        /* Hardware Accelerated Smooth CSS Parallax Wrapper */
+        .parallax-wrapper {
+            height: 100vh;
+            height: 100dvh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            perspective: 1px;
+            perspective-origin: 0 0;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .parallax-hero {
+            position: relative;
+            height: 100vh;
+            height: 100dvh;
+            transform-style: preserve-3d;
+            z-index: 1;
+        }
+
+        .parallax-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            /* Move layer back in 3D space & scale to cover viewport */
+            transform: translateZ(-1px) scale(2);
+            z-index: -1;
             will-change: transform;
-            transform: translateZ(0);
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
+        }
+
+        .parallax-content {
+            position: relative;
+            z-index: 10;
+            background-color: #0a0a0a;
         }
 
         /* Custom Cursor for desktop devices only */
@@ -77,174 +113,183 @@
     <div id="cursor-dot"></div>
     <div id="cursor-ring"><span id="cursor-text">VIEW</span></div>
 
-    <!-- Header Navigation -->
-    <header class="fixed top-0 left-0 w-full z-40 mix-blend-difference px-6 md:px-12 py-5 md:py-6 flex justify-between items-center">
-        <a href="#" class="font-cinzel text-lg md:text-xl tracking-[0.25em] font-bold uppercase text-white z-50">GuyRDT</a>
-        
-        <!-- Desktop Nav -->
-        <nav class="hidden md:flex space-x-10 text-xs tracking-[0.2em] font-medium uppercase text-white">
-            <a href="#stills" class="hover:text-neutral-400 transition-colors">Stills</a>
-            <a href="#video" class="hover:text-neutral-400 transition-colors">Video</a>
-            <a href="#about" class="hover:text-neutral-400 transition-colors">About</a>
-            <a href="#contact" class="hover:text-neutral-400 transition-colors">Contact</a>
-        </nav>
+    <!-- Parallax Main Container -->
+    <div class="parallax-wrapper">
 
-        <!-- Mobile Menu Toggle Button -->
-        <button id="menu-btn" onclick="toggleMobileMenu()" class="md:hidden text-white focus:outline-none z-50 p-2">
-            <svg id="menu-icon" class="w-6 h-6 fill-current" viewBox="0 0 24 24">
-                <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
-            </svg>
-        </button>
-    </header>
+        <!-- Header Navigation -->
+        <header class="fixed top-0 left-0 w-full z-40 mix-blend-difference px-6 md:px-12 py-5 md:py-6 flex justify-between items-center">
+            <a href="#" class="font-cinzel text-lg md:text-xl tracking-[0.25em] font-bold uppercase text-white z-50">GuyRDT</a>
+            
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex space-x-10 text-xs tracking-[0.2em] font-medium uppercase text-white">
+                <a href="#stills" class="hover:text-neutral-400 transition-colors">Stills</a>
+                <a href="#video" class="hover:text-neutral-400 transition-colors">Video</a>
+                <a href="#about" class="hover:text-neutral-400 transition-colors">About</a>
+                <a href="#contact" class="hover:text-neutral-400 transition-colors">Contact</a>
+            </nav>
 
-    <!-- Mobile Navigation Overlay -->
-    <div id="mobile-menu" class="fixed inset-0 bg-black/95 backdrop-blur-xl z-30 hidden flex flex-col justify-center items-center space-y-8 text-center p-6">
-        <a href="#stills" onclick="toggleMobileMenu()" class="font-cinzel text-2xl tracking-[0.2em] text-white uppercase">Stills</a>
-        <a href="#video" onclick="toggleMobileMenu()" class="font-cinzel text-2xl tracking-[0.2em] text-white uppercase">Video</a>
-        <a href="#about" onclick="toggleMobileMenu()" class="font-cinzel text-2xl tracking-[0.2em] text-white uppercase">About</a>
-        <a href="#contact" onclick="toggleMobileMenu()" class="font-cinzel text-2xl tracking-[0.2em] text-white uppercase">Contact</a>
-    </div>
+            <!-- Mobile Menu Toggle Button -->
+            <button id="menu-btn" onclick="toggleMobileMenu()" class="md:hidden text-white focus:outline-none z-50 p-2">
+                <svg id="menu-icon" class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                    <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                </svg>
+            </button>
+        </header>
 
-    <!-- Hero Section -->
-    <section class="relative min-h-[100dvh] w-full overflow-hidden flex items-end pb-12 md:pb-20 px-6 md:px-16">
-        <div id="hero-bg" class="absolute inset-0 w-full h-[120%] -top-[10%] z-0 parallax-container">
-            <img id="hero-img"
-                 src="./Hero shot.jpg" 
-                 onerror="if(this.src.indexOf('hero%20shot.jpg') !== -1){ this.src='./hero shot.jpg'; } else if(this.src.indexOf('hero.jpg') === -1){ this.src='./hero.jpg'; }"
-                 alt="Drift Night by Guy Arditi" 
-                 class="w-full h-full object-cover brightness-[0.75] contrast-[1.05]">
+        <!-- Mobile Navigation Overlay -->
+        <div id="mobile-menu" class="fixed inset-0 bg-black/95 backdrop-blur-xl z-30 hidden flex flex-col justify-center items-center space-y-8 text-center p-6">
+            <a href="#stills" onclick="toggleMobileMenu()" class="font-cinzel text-2xl tracking-[0.2em] text-white uppercase">Stills</a>
+            <a href="#video" onclick="toggleMobileMenu()" class="font-cinzel text-2xl tracking-[0.2em] text-white uppercase">Video</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="font-cinzel text-2xl tracking-[0.2em] text-white uppercase">About</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="font-cinzel text-2xl tracking-[0.2em] text-white uppercase">Contact</a>
         </div>
-        <div class="relative z-10 max-w-4xl">
-            <p class="text-[10px] md:text-xs uppercase tracking-[0.3em] md:tracking-[0.4em] text-neutral-400 mb-2 md:mb-3 font-medium">Automotive Photo & Video</p>
-            <h1 class="font-cinzel text-3xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white leading-tight">
-                PRECISION IN MOTION
-            </h1>
-        </div>
-    </section>
 
-    <!-- Stills Section -->
-    <section id="stills" class="py-16 md:py-28 px-6 md:px-16 border-t border-neutral-900 relative z-10 bg-[#0a0a0a]">
-        <div class="max-w-7xl mx-auto">
-            <div class="mb-8 md:mb-16">
-                <span class="text-[10px] font-mono uppercase tracking-[0.3em] text-neutral-500 block mb-2">01 / SELECTED WORK</span>
-                <h2 class="font-cinzel text-2xl md:text-5xl font-bold tracking-wide">STILLS</h2>
+        <!-- Hero Section with CSS 3D Parallax -->
+        <section class="parallax-hero flex items-end pb-12 md:pb-20 px-6 md:px-16">
+            <div class="parallax-bg">
+                <img id="hero-img"
+                     src="./Hero shot.jpg" 
+                     onerror="if(this.src.indexOf('hero%20shot.jpg') !== -1){ this.src='./hero shot.jpg'; } else if(this.src.indexOf('hero.jpg') === -1){ this.src='./hero.jpg'; }"
+                     alt="Drift Night by Guy Arditi" 
+                     class="w-full h-full object-cover brightness-[0.75] contrast-[1.05]">
             </div>
+            <div class="relative z-10 max-w-4xl">
+                <p class="text-[10px] md:text-xs uppercase tracking-[0.3em] md:tracking-[0.4em] text-neutral-400 mb-2 md:mb-3 font-medium">Automotive Photo & Video</p>
+                <h1 class="font-cinzel text-3xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white leading-tight">
+                    PRECISION IN MOTION
+                </h1>
+            </div>
+        </section>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-                
-                <!-- Project 1 -->
-                <div class="card-image-wrapper group cursor-pointer hover-trigger" 
-                     data-cursor="VIEW PROJECT"
-                     onclick="openProjectModal('DRIFT NIGHT', 'Tandem Action & Track Shoot', [
-                        './Hero shot.jpg',
-                        './drift night-71.jpg',
-                        './hero.jpg'
-                     ])">
-                    <div class="aspect-[4/3] bg-neutral-900">
-                        <img src="./Hero shot.jpg" 
-                             onerror="this.src='./hero.jpg';"
-                             class="w-full h-full object-cover" 
-                             alt="Drift Night Action">
+        <!-- Main Content (Overlaying Content) -->
+        <div class="parallax-content">
+
+            <!-- Stills Section -->
+            <section id="stills" class="py-16 md:py-28 px-6 md:px-16 border-t border-neutral-900">
+                <div class="max-w-7xl mx-auto">
+                    <div class="mb-8 md:mb-16">
+                        <span class="text-[10px] font-mono uppercase tracking-[0.3em] text-neutral-500 block mb-2">01 / SELECTED WORK</span>
+                        <h2 class="font-cinzel text-2xl md:text-5xl font-bold tracking-wide">STILLS</h2>
                     </div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 md:p-6 flex flex-col justify-end">
-                        <h3 class="font-cinzel text-sm md:text-lg font-bold tracking-wider text-white">DRIFT NIGHT ACTION</h3>
-                        <p class="text-[9px] md:text-[10px] text-neutral-400 tracking-widest uppercase mt-1">View Project →</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                        
+                        <!-- Project 1 -->
+                        <div class="card-image-wrapper group cursor-pointer hover-trigger" 
+                             data-cursor="VIEW PROJECT"
+                             onclick="openProjectModal('DRIFT NIGHT', 'Tandem Action & Track Shoot', [
+                                './Hero shot.jpg',
+                                './drift night-71.jpg',
+                                './hero.jpg'
+                             ])">
+                            <div class="aspect-[4/3] bg-neutral-900">
+                                <img src="./Hero shot.jpg" 
+                                     onerror="this.src='./hero.jpg';"
+                                     class="w-full h-full object-cover" 
+                                     alt="Drift Night Action">
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 md:p-6 flex flex-col justify-end">
+                                <h3 class="font-cinzel text-sm md:text-lg font-bold tracking-wider text-white">DRIFT NIGHT ACTION</h3>
+                                <p class="text-[9px] md:text-[10px] text-neutral-400 tracking-widest uppercase mt-1">View Project →</p>
+                            </div>
+                        </div>
+
+                        <!-- Project 2 -->
+                        <div class="card-image-wrapper group cursor-pointer hover-trigger" 
+                             data-cursor="VIEW PROJECT"
+                             onclick="openProjectModal('LAMBORGHINI GALLARDO', 'Street Shoot', [
+                                './lamborghini gallardo-1.jpg'
+                             ])">
+                            <div class="aspect-[4/3] bg-neutral-900">
+                                <img src="./lamborghini gallardo-1.jpg" class="w-full h-full object-cover" alt="Lamborghini Gallardo">
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 md:p-6 flex flex-col justify-end">
+                                <h3 class="font-cinzel text-sm md:text-lg font-bold tracking-wider text-white">LAMBORGHINI GALLARDO</h3>
+                                <p class="text-[9px] md:text-[10px] text-neutral-400 tracking-widest uppercase mt-1">View Project →</p>
+                            </div>
+                        </div>
+
+                        <!-- Project 3 -->
+                        <div class="card-image-wrapper group cursor-pointer hover-trigger" 
+                             data-cursor="VIEW PROJECT"
+                             onclick="openProjectModal('FERRARI F8 TRIBUTO', 'Sunset Dynamic Motion', [
+                                'https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1600&auto=format&fit=crop'
+                             ])">
+                            <div class="aspect-[4/3] bg-neutral-900">
+                                <img src="https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover" alt="Ferrari F8 Tributo">
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 md:p-6 flex flex-col justify-end">
+                                <h3 class="font-cinzel text-sm md:text-lg font-bold tracking-wider text-white">FERRARI F8 TRIBUTO</h3>
+                                <p class="text-[9px] md:text-[10px] text-neutral-400 tracking-widest uppercase mt-1">View Project →</p>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
+            </section>
 
-                <!-- Project 2 -->
-                <div class="card-image-wrapper group cursor-pointer hover-trigger" 
-                     data-cursor="VIEW PROJECT"
-                     onclick="openProjectModal('LAMBORGHINI GALLARDO', 'Street Shoot', [
-                        './lamborghini gallardo-1.jpg'
-                     ])">
-                    <div class="aspect-[4/3] bg-neutral-900">
-                        <img src="./lamborghini gallardo-1.jpg" class="w-full h-full object-cover" alt="Lamborghini Gallardo">
+            <!-- Video Section -->
+            <section id="video" class="py-16 md:py-28 px-6 md:px-16 border-t border-neutral-900 bg-black">
+                <div class="max-w-7xl mx-auto">
+                    <div class="mb-8 md:mb-16">
+                        <span class="text-[10px] font-mono uppercase tracking-[0.3em] text-neutral-500 block mb-2">02 / CINEMATIC REELS</span>
+                        <h2 class="font-cinzel text-2xl md:text-5xl font-bold tracking-wide">VIDEO</h2>
                     </div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 md:p-6 flex flex-col justify-end">
-                        <h3 class="font-cinzel text-sm md:text-lg font-bold tracking-wider text-white">LAMBORGHINI GALLARDO</h3>
-                        <p class="text-[9px] md:text-[10px] text-neutral-400 tracking-widest uppercase mt-1">View Project →</p>
-                    </div>
-                </div>
 
-                <!-- Project 3 -->
-                <div class="card-image-wrapper group cursor-pointer hover-trigger" 
-                     data-cursor="VIEW PROJECT"
-                     onclick="openProjectModal('FERRARI F8 TRIBUTO', 'Sunset Dynamic Motion', [
-                        'https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1600&auto=format&fit=crop'
-                     ])">
-                    <div class="aspect-[4/3] bg-neutral-900">
-                        <img src="https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover" alt="Ferrari F8 Tributo">
-                    </div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 md:p-6 flex flex-col justify-end">
-                        <h3 class="font-cinzel text-sm md:text-lg font-bold tracking-wider text-white">FERRARI F8 TRIBUTO</h3>
-                        <p class="text-[9px] md:text-[10px] text-neutral-400 tracking-widest uppercase mt-1">View Project →</p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Video Section -->
-    <section id="video" class="py-16 md:py-28 px-6 md:px-16 border-t border-neutral-900 bg-black relative z-10">
-        <div class="max-w-7xl mx-auto">
-            <div class="mb-8 md:mb-16">
-                <span class="text-[10px] font-mono uppercase tracking-[0.3em] text-neutral-500 block mb-2">02 / CINEMATIC REELS</span>
-                <h2 class="font-cinzel text-2xl md:text-5xl font-bold tracking-wide">VIDEO</h2>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Video 1 -->
-                <div class="card-image-wrapper group cursor-pointer hover-trigger" 
-                     data-cursor="PLAY FILM"
-                     onclick="openVideoModal('https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'COMMERCIAL REEL 2026')">
-                    <div class="aspect-video bg-neutral-900 relative">
-                        <img src="./Hero shot.jpg" 
-                             onerror="this.src='./hero.jpg';" 
-                             class="w-full h-full object-cover brightness-75" 
-                             alt="Commercial Reel">
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <div class="w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/40 bg-black/40 backdrop-blur-md flex items-center justify-center">
-                                <svg class="w-4 h-4 md:w-5 md:h-5 fill-current text-white translate-x-0.5" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Video 1 -->
+                        <div class="card-image-wrapper group cursor-pointer hover-trigger" 
+                             data-cursor="PLAY FILM"
+                             onclick="openVideoModal('https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'COMMERCIAL REEL 2026')">
+                            <div class="aspect-video bg-neutral-900 relative">
+                                <img src="./Hero shot.jpg" 
+                                     onerror="this.src='./hero.jpg';" 
+                                     class="w-full h-full object-cover brightness-75" 
+                                     alt="Commercial Reel">
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <div class="w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/40 bg-black/40 backdrop-blur-md flex items-center justify-center">
+                                        <svg class="w-4 h-4 md:w-5 md:h-5 fill-current text-white translate-x-0.5" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-3 md:mt-4 flex justify-between items-center">
+                                <h3 class="font-cinzel text-xs md:text-base font-bold tracking-wider text-white">COMMERCIAL REEL 2026</h3>
+                                <span class="text-[9px] md:text-[10px] text-neutral-500 tracking-widest uppercase">Play MP4</span>
                             </div>
                         </div>
                     </div>
-                    <div class="mt-3 md:mt-4 flex justify-between items-center">
-                        <h3 class="font-cinzel text-xs md:text-base font-bold tracking-wider text-white">COMMERCIAL REEL 2026</h3>
-                        <span class="text-[9px] md:text-[10px] text-neutral-500 tracking-widest uppercase">Play MP4</span>
-                    </div>
                 </div>
-            </div>
-        </div>
-    </section>
+            </section>
 
-    <!-- About Section -->
-    <section id="about" class="py-16 md:py-28 px-6 md:px-16 border-t border-neutral-900 relative z-10 bg-[#0a0a0a]">
-        <div class="max-w-4xl mx-auto">
-            <span class="text-[10px] font-mono uppercase tracking-[0.3em] text-neutral-500 block mb-3">03 / STATEMENT</span>
-            <h2 class="font-cinzel text-2xl md:text-5xl font-bold tracking-wide mb-6 md:mb-8">DRIVEN BY MOTION</h2>
-            <p class="text-sm md:text-xl text-neutral-300 font-light leading-relaxed mb-4 md:mb-6">
-                Specializing in dynamic automotive photography and filmmaking. Based in Northern Israel, capturing visual stories for brands, car events, and private collectors—from high-octane track action to editorial stills.
-            </p>
-            <p class="text-xs md:text-sm text-neutral-500 leading-relaxed max-w-2xl">
-                Every vehicle has a distinct design language. My focus is on controlled lighting, dynamic composition, and seamless movement to create visual stories for brands, collectors, and enthusiasts worldwide.
-            </p>
-        </div>
-    </section>
+            <!-- About Section -->
+            <section id="about" class="py-16 md:py-28 px-6 md:px-16 border-t border-neutral-900 bg-[#0a0a0a]">
+                <div class="max-w-4xl mx-auto">
+                    <span class="text-[10px] font-mono uppercase tracking-[0.3em] text-neutral-500 block mb-3">03 / STATEMENT</span>
+                    <h2 class="font-cinzel text-2xl md:text-5xl font-bold tracking-wide mb-6 md:mb-8">DRIVEN BY MOTION</h2>
+                    <p class="text-sm md:text-xl text-neutral-300 font-light leading-relaxed mb-4 md:mb-6">
+                        Specializing in dynamic automotive photography and filmmaking. Based in Northern Israel, capturing visual stories for brands, car events, and private collectors—from high-octane track action to editorial stills.
+                    </p>
+                    <p class="text-xs md:text-sm text-neutral-500 leading-relaxed max-w-2xl">
+                        Every vehicle has a distinct design language. My focus is on controlled lighting, dynamic composition, and seamless movement to create visual stories for brands, collectors, and enthusiasts worldwide.
+                    </p>
+                </div>
+            </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-16 md:py-28 px-6 md:px-16 border-t border-neutral-900 bg-black relative z-10">
-        <div class="max-w-4xl mx-auto text-center">
-            <span class="text-[10px] font-mono uppercase tracking-[0.3em] text-neutral-500 block mb-3">04 / INQUIRIES</span>
-            <h2 class="font-cinzel text-3xl md:text-6xl font-bold tracking-wide mb-8">LET'S CREATE</h2>
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="mailto:guyarditi@gmail.com" class="w-full sm:w-auto px-8 py-4 bg-white text-black text-xs font-semibold tracking-[0.2em] uppercase">guyarditi@gmail.com</a>
-                <a href="https://www.instagram.com/guy.rdt/" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-8 py-4 border border-neutral-800 text-white text-xs font-semibold tracking-[0.2em] uppercase hover:bg-neutral-900 transition-colors">Instagram ↗</a>
-            </div>
-            <p class="text-[9px] md:text-[10px] text-neutral-600 tracking-widest uppercase mt-16 md:mt-20">© GUY ARDITI. ALL RIGHTS RESERVED.</p>
+            <!-- Contact Section -->
+            <section id="contact" class="py-16 md:py-28 px-6 md:px-16 border-t border-neutral-900 bg-black">
+                <div class="max-w-4xl mx-auto text-center">
+                    <span class="text-[10px] font-mono uppercase tracking-[0.3em] text-neutral-500 block mb-3">04 / INQUIRIES</span>
+                    <h2 class="font-cinzel text-3xl md:text-6xl font-bold tracking-wide mb-8">LET'S CREATE</h2>
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <a href="mailto:guyarditi@gmail.com" class="w-full sm:w-auto px-8 py-4 bg-white text-black text-xs font-semibold tracking-[0.2em] uppercase">guyarditi@gmail.com</a>
+                        <a href="https://www.instagram.com/guy.rdt/" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-8 py-4 border border-neutral-800 text-white text-xs font-semibold tracking-[0.2em] uppercase hover:bg-neutral-900 transition-colors">Instagram ↗</a>
+                    </div>
+                    <p class="text-[9px] md:text-[10px] text-neutral-600 tracking-widest uppercase mt-16 md:mt-20">© GUY ARDITI. ALL RIGHTS RESERVED.</p>
+                </div>
+            </section>
+
         </div>
-    </section>
+    </div>
 
     <!-- Project Gallery Modal -->
     <div id="project-modal" class="fixed inset-0 z-50 modal-blur hidden flex flex-col justify-between p-4 md:p-12 overflow-y-auto">
@@ -276,7 +321,6 @@
         const cursorDot = document.getElementById('cursor-dot');
         const cursorRing = document.getElementById('cursor-ring');
         const cursorText = document.getElementById('cursor-text');
-        const heroBg = document.getElementById('hero-bg');
         const mobileMenu = document.getElementById('mobile-menu');
 
         /* Mobile Menu Toggle */
@@ -284,34 +328,12 @@
             const isOpen = !mobileMenu.classList.contains('hidden');
             if (isOpen) {
                 mobileMenu.classList.add('hidden');
-                document.body.style.overflow = 'auto';
             } else {
                 mobileMenu.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
             }
         }
 
-        /* Highly Optimized Smooth Parallax Script for All Devices (Mobile Included) */
-        let latestScrollY = 0;
-        let ticking = false;
-
-        function updateParallax() {
-            if (heroBg && latestScrollY <= window.innerHeight * 1.2) {
-                const translateY = latestScrollY * 0.35;
-                heroBg.style.transform = `translate3d(0, ${translateY}px, 0)`;
-            }
-            ticking = false;
-        }
-
-        window.addEventListener('scroll', () => {
-            latestScrollY = window.scrollY;
-            if (!ticking) {
-                window.requestAnimationFrame(updateParallax);
-                ticking = true;
-            }
-        }, { passive: true });
-
-        /* Desktop Cursor Handler */
+        /* Desktop Custom Cursor Handler */
         if (window.matchMedia('(pointer: fine)').matches) {
             window.addEventListener('mousemove', (e) => {
                 if (cursorDot) {
@@ -340,12 +362,10 @@
                 container.appendChild(img);
             });
             document.getElementById('project-modal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
         }
 
         function closeProjectModal() {
             document.getElementById('project-modal').classList.add('hidden');
-            document.body.style.overflow = 'auto';
         }
 
         function openVideoModal(videoSrc, title) {
@@ -354,14 +374,12 @@
             player.src = videoSrc;
             document.getElementById('video-modal').classList.remove('hidden');
             player.play();
-            document.body.style.overflow = 'hidden';
         }
 
         function closeVideoModal() {
             const player = document.getElementById('native-video-player');
             player.pause(); player.src = '';
             document.getElementById('video-modal').classList.add('hidden');
-            document.body.style.overflow = 'auto';
         }
     </script>
 </body>
