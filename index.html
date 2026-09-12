@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guy Arditi — Automotive Photography & Film</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0a0a0a;
+            color: #e5e5e5;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .font-cinzel { font-family: 'Cinzel', serif; }
+
+        /* Custom Cursor for desktop devices only */
+        @media (pointer: fine) {
+            body { cursor: none; }
+            #cursor-dot {
+                width: 8px; height: 8px; background-color: #ffffff; border-radius: 50%;
+                position: fixed; pointer-events: none; z-index: 9999;
+                transform: translate(-50%, -50%); transition: transform 0.1s ease;
+            }
+            #cursor-ring {
+                width: 40px; height: 40px; border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 50%;
+                position: fixed; pointer-events: none; z-index: 9998;
+                transform: translate(-50%, -50%); transition: transform 0.15s ease-out, width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
+                display: flex; align-items: center; justify-content: center;
+            }
+            #cursor-text {
+                font-size: 8px; font-weight: 700; letter-spacing: 1px; color: #000; opacity: 0;
+                transition: opacity 0.2s ease; white-space: nowrap; text-transform: uppercase;
+            }
+            body.hover-target #cursor-ring { width: 85px; height: 85px; background-color: #ffffff; border-color: #ffffff; }
+            body.hover-target #cursor-text { opacity: 1; }
+            body.hover-target #cursor-dot { opacity: 0; }
+        }
+
+        /* Disable custom cursor on touch devices */
+        @media (pointer: coarse) {
+            #cursor-dot, #cursor-ring { display: none !important; }
+            body { cursor: auto !important; }
+        }
+
+        /* Image hover effect */
+        .card-image-wrapper { overflow: hidden; position: relative; }
+        .card-image-wrapper img { transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+        .card-image-wrapper:hover img { transform: scale(1.06); }
+        
+        /* Modal background blur */
+        .modal-blur { backdrop-filter: blur(20px); background-color: rgba(5, 5, 5, 0.94); }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #262626; border-radius: 3px; }
+    </style>
+</head>
+<body class="selection:bg-white selection:text-black">
+
+    <!-- Cursor Elements -->
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"><span id="cursor-text">VIEW</span></div>
+
+    <!-- Header Navigation -->
+    <header class="fixed top-0 left-0 w-full z-40 mix-blend-difference px-6 md:px-12 py-6 flex justify-between items-center">
+        <a href="#" class="font-cinzel text-lg md:text-xl tracking-[0.25em] font-bold uppercase text-white">Guy Arditi</a>
+        <nav class="flex space-x-6 md:space-x-10 text-[10px] md:text-xs tracking-[0.2em] font-medium uppercase text-white">
+            <a href="#photography" class="hover:text-neutral-400 transition-colors">Photos</a>
+            <a href="#film" class="hover:text-neutral-400 transition-colors">Film</a>
+            <a href="#about" class="hover:text-neutral-400 transition-colors">About</a>
+            <a href="#contact" class="hover:text-neutral-400 transition-colors">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative h-screen w-full overflow-hidden flex items-end pb-16 md:pb-20 px-6 md:px-16">
+        <div id="hero-bg" class="absolute inset-0 w-full h-full z-0 scale-105">
+            <img src="https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=2000&auto=format&fit=crop" 
+                 alt="Automotive Hero" 
+                 class="w-full h-full object-cover brightness-[0.55] contrast-[1.1]">
+        </div>
+        <div class="relative z-10 max-w-4xl">
+            <p class="text-[10px] md:text-xs uppercase tracking-[0.4em] text-neutral-400 mb-3 font-medium">Automotive Photography & Film</p>
+            <h1 class="font-cinzel text-3xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white leading-tight">
+                PRECISION IN MOTION
+            </h1>
+        </div>
+    </section>
+
+    <!-- Photography Section -->
+    <section id="photography" class="py-20 md:py-28 px-6 md:px-16 border-t border-neutral-900">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-12 md:mb-16">
+                <span class="text-[10px] font-mono uppercase tracking-[0.3em] text-neutral-500 block mb-2">01 / SELECTED WORK</span>
+                <h2 class="font-cinzel text-3xl md:text-5xl font-bold tracking-wide">PHOTOGRAPHY</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                
+                <!-- Project 1 -->
+                <div class="card-image-wrapper group cursor-pointer hover-trigger" 
+                     data-cursor="VIEW PROJECT"
+                     onclick="openProjectModal('PORSCHE 911 GT3 RS', 'Track & Editorial Shoot', [
+                        'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?q=80&w=1600&auto=format&fit=crop',
+                        'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1600&auto=format&fit=crop'
+                     ])">
+                    <div class="aspect-[4/3] bg-neutral-900">
+                        <img src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover" alt="Porsche 911 GT3 RS">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
+                        <h3 class="font-cinzel text-base md:text-lg font-bold tracking-wider text-white">PORSCHE 911 GT3 RS</h3>
+                        <p class="text-[10px] text-neutral-400 tracking-widest uppercase mt-1">View Project →</p>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="card-image-wrapper group cursor-pointer hover-trigger" 
+                     data-cursor="VIEW PROJECT"
+                     onclick="openProjectModal('FERRARI F8 TRIBUTO', 'Sunset Dynamic Motion', [
+                        'https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1600&auto=format&fit=crop'
+                     ])">
+                    <div class="aspect-[4/3] bg-neutral-900">
+                        <img src="https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover" alt="Ferrari F8 Tributo">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
+                        <h3 class="font-cinzel text-base md:text-lg font-bold tracking-wider text-white">FERRARI F8 TRIBUTO</h3>
+                        <p class="text-[10px] text-neutral-400 tracking-widest uppercase mt-1">View Project →</p>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="card-image-wrapper group cursor-pointer hover-trigger" 
+                     data-cursor="VIEW PROJECT"
+                     onclick="openProjectModal('BMW M4 CSL', 'Urban Night Shoot', [
+                        'https://images.unsplash.com/photo-1555215695-3004980ad54e?q=80&w=1600&auto=format&fit=crop'
+                     ])">
+                    <div class="aspect-[4/3] bg-neutral-900">
+                        <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover" alt="BMW M4 CSL">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
+                        <h3 class="font-cinzel text-base md:text-lg font-bold tracking-wider text-white">BMW M4 CSL</h3>
+                        <p class="text-[10px] text-neutral-400 tracking-widest uppercase mt-1">View Project →</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Film Section -->
+    <section id="film" class="py-20 md:py-28 px-6 md:px-16 border-t border-neutral-900 bg-black">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-12 md:mb-16">
+                <span class="text-[10px] font-mono uppercase tracking-[0.3em] text-neutral-500 block mb-2">02 / CINEMATIC REELS</span>
+                <h2 class="font-cinzel text-3xl md:text-5xl font-bold tracking-wide">MOTION & FILM</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Video 1 -->
+                <div class="card-image-wrapper group cursor-pointer hover-trigger" 
+                     data-cursor="PLAY FILM"
+                     onclick="openVideoModal('https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'COMMERCIAL REEL 2026')">
+                    <div class="aspect-video bg-neutral-900 relative">
+                        <img src="https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1200&auto=format&fit=crop" class="w-full h-full object-cover brightness-75" alt="Commercial Reel">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-14 h-14 rounded-full border border-white/40 bg-black/40 backdrop-blur-md flex items-center justify-center">
+                                <svg class="w-5 h-5 fill-current text-white translate-x-0.5" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex justify-between items-center">
+                        <h3 class="font-cinzel text-sm md:text-base font-bold tracking-wider text-white">COMMERCIAL REEL 2026</h3>
+                        <span class="text-[10px] text-neutral-500 tracking-widest uppercase">Play MP4</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 md:py-28 px-6 md:px-16 border-t border-neutral-900">
+        <div class="max-w-4xl mx-auto">
+            <span class="text-[10px] font-mono uppercase tracking-[0.3em] text-neutral-500 block mb-3">03 / STATEMENT</span>
+            <h2 class="font-cinzel text-3xl md:text-5xl font-bold tracking-wide mb-8">DRIVEN BY MOTION</h2>
+            <p class="text-base md:text-xl text-neutral-300 font-light leading-relaxed mb-6">
+                Specializing in high-end automotive photography and cinematography, capturing the lines, character, and raw performance of every machine.
+            </p>
+            <p class="text-xs md:text-sm text-neutral-500 leading-relaxed max-w-2xl">
+                Every vehicle has a distinct design language. My focus is on controlled lighting, dynamic composition, and seamless movement to create visual stories for brands, collectors, and enthusiasts worldwide.
+            </p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 md:py-28 px-6 md:px-16 border-t border-neutral-900 bg-black">
+        <div class="max-w-4xl mx-auto text-center">
+            <span class="text-[10px] font-mono uppercase tracking-[0.3em] text-neutral-500 block mb-3">04 / INQUIRIES</span>
+            <h2 class="font-cinzel text-3xl md:text-6xl font-bold tracking-wide mb-8">LET'S CREATE</h2>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="mailto:guyarditi@gmail.com" class="px-8 py-4 bg-white text-black text-xs font-semibold tracking-[0.2em] uppercase">guyarditi@gmail.com</a>
+                <a href="https://instagram.com" target="_blank" class="px-8 py-4 border border-neutral-800 text-white text-xs font-semibold tracking-[0.2em] uppercase">Instagram ↗</a>
+            </div>
+            <p class="text-[10px] text-neutral-600 tracking-widest uppercase mt-20">© GUY ARDITI. ALL RIGHTS RESERVED.</p>
+        </div>
+    </section>
+
+    <!-- Project Gallery Modal -->
+    <div id="project-modal" class="fixed inset-0 z-50 modal-blur hidden flex flex-col justify-between p-6 md:p-12 overflow-y-auto">
+        <div class="flex justify-between items-center border-b border-neutral-800 pb-4">
+            <div>
+                <h3 id="modal-title" class="font-cinzel text-lg md:text-xl font-bold text-white"></h3>
+                <p id="modal-subtitle" class="text-[10px] text-neutral-400 tracking-widest uppercase"></p>
+            </div>
+            <button onclick="closeProjectModal()" class="text-white text-xs px-4 py-2 border border-neutral-800">Close ✕</button>
+        </div>
+        <div id="modal-images" class="my-8 space-y-6 max-w-4xl mx-auto w-full"></div>
+    </div>
+
+    <!-- Native Video Player Modal -->
+    <div id="video-modal" class="fixed inset-0 z-50 modal-blur hidden flex items-center justify-center p-4">
+        <div class="relative w-full max-w-4xl bg-black border border-neutral-800 p-2">
+            <div class="flex justify-between items-center mb-2 px-2">
+                <span id="video-title" class="font-cinzel text-xs font-bold text-white"></span>
+                <button onclick="closeVideoModal()" class="text-white text-xs">Close ✕</button>
+            </div>
+            <video id="native-video-player" controls playsinline class="w-full aspect-video bg-black">
+                <source src="" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorRing = document.getElementById('cursor-ring');
+        const cursorText = document.getElementById('cursor-text');
+
+        window.addEventListener('mousemove', (e) => {
+            if (cursorDot) {
+                cursorDot.style.left = `${e.clientX}px`; cursorDot.style.top = `${e.clientY}px`;
+                cursorRing.style.left = `${e.clientX}px`; cursorRing.style.top = `${e.clientY}px`;
+            }
+        });
+
+        document.querySelectorAll('.hover-trigger').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                document.body.classList.add('hover-target');
+                if (cursorText) cursorText.innerText = el.getAttribute('data-cursor') || 'VIEW';
+            });
+            el.addEventListener('mouseleave', () => document.body.classList.remove('hover-target'));
+        });
+
+        function openProjectModal(title, subtitle, images) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-subtitle').innerText = subtitle;
+            const container = document.getElementById('modal-images');
+            container.innerHTML = '';
+            images.forEach(src => {
+                const img = document.createElement('img');
+                img.src = src; img.className = 'w-full h-auto border border-neutral-800';
+                container.appendChild(img);
+            });
+            document.getElementById('project-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeProjectModal() {
+            document.getElementById('project-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function openVideoModal(videoSrc, title) {
+            const player = document.getElementById('native-video-player');
+            document.getElementById('video-title').innerText = title;
+            player.src = videoSrc;
+            document.getElementById('video-modal').classList.remove('hidden');
+            player.play();
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeVideoModal() {
+            const player = document.getElementById('native-video-player');
+            player.pause(); player.src = '';
+            document.getElementById('video-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+    </script>
+</body>
+</html>
