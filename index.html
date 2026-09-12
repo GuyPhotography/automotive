@@ -79,12 +79,12 @@
 
     <!-- Hero Section -->
     <section class="relative h-screen w-full overflow-hidden flex items-end pb-16 md:pb-20 px-6 md:px-16">
-        <div id="hero-bg" class="absolute inset-0 w-full h-full z-0 scale-110">
+        <div id="hero-bg" class="absolute inset-0 w-full h-full z-0 scale-105">
             <img id="hero-img"
-                 src="./lamborghini gallardo-1.jpg" 
-                 onerror="if(this.src.indexOf('hero.jpg') === -1){ this.src='./hero.jpg'; } else { this.src='https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=2000&auto=format&fit=crop'; }"
-                 alt="Lamborghini Gallardo by Guy Arditi" 
-                 class="w-full h-full object-cover brightness-[0.7] contrast-[1.05]">
+                 src="./drift night-71.jpg" 
+                 onerror="if(this.src.indexOf('hero.jpg') === -1){ this.src='./hero.jpg'; }"
+                 alt="Drift Night by Guy Arditi" 
+                 class="w-full h-full object-cover brightness-[0.75] contrast-[1.05]">
         </div>
         <div class="relative z-10 max-w-4xl">
             <p class="text-[10px] md:text-xs uppercase tracking-[0.4em] text-neutral-400 mb-3 font-medium">Automotive Photography & Videography</p>
@@ -107,15 +107,30 @@
                 <!-- Project 1 -->
                 <div class="card-image-wrapper group cursor-pointer hover-trigger" 
                      data-cursor="VIEW PROJECT"
-                     onclick="openProjectModal('LAMBORGHINI GALLARDO', 'Street & Sunset Shoot', [
-                        './lamborghini gallardo-1.jpg',
+                     onclick="openProjectModal('DRIFT NIGHT', 'Tandem Action & Track Shoot', [
+                        './drift night-71.jpg',
                         './hero.jpg'
                      ])">
                     <div class="aspect-[4/3] bg-neutral-900">
-                        <img src="./lamborghini gallardo-1.jpg" 
+                        <img src="./drift night-71.jpg" 
                              onerror="this.src='./hero.jpg';"
                              class="w-full h-full object-cover" 
-                             alt="Lamborghini Gallardo">
+                             alt="Drift Night Action">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
+                        <h3 class="font-cinzel text-base md:text-lg font-bold tracking-wider text-white">DRIFT NIGHT ACTION</h3>
+                        <p class="text-[10px] text-neutral-400 tracking-widest uppercase mt-1">View Project →</p>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="card-image-wrapper group cursor-pointer hover-trigger" 
+                     data-cursor="VIEW PROJECT"
+                     onclick="openProjectModal('LAMBORGHINI GALLARDO', 'Street Shoot', [
+                        './lamborghini gallardo-1.jpg'
+                     ])">
+                    <div class="aspect-[4/3] bg-neutral-900">
+                        <img src="./lamborghini gallardo-1.jpg" class="w-full h-full object-cover" alt="Lamborghini Gallardo">
                     </div>
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
                         <h3 class="font-cinzel text-base md:text-lg font-bold tracking-wider text-white">LAMBORGHINI GALLARDO</h3>
@@ -123,7 +138,7 @@
                     </div>
                 </div>
 
-                <!-- Project 2 -->
+                <!-- Project 3 -->
                 <div class="card-image-wrapper group cursor-pointer hover-trigger" 
                      data-cursor="VIEW PROJECT"
                      onclick="openProjectModal('FERRARI F8 TRIBUTO', 'Sunset Dynamic Motion', [
@@ -134,21 +149,6 @@
                     </div>
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
                         <h3 class="font-cinzel text-base md:text-lg font-bold tracking-wider text-white">FERRARI F8 TRIBUTO</h3>
-                        <p class="text-[10px] text-neutral-400 tracking-widest uppercase mt-1">View Project →</p>
-                    </div>
-                </div>
-
-                <!-- Project 3 -->
-                <div class="card-image-wrapper group cursor-pointer hover-trigger" 
-                     data-cursor="VIEW PROJECT"
-                     onclick="openProjectModal('BMW M4 CSL', 'Urban Night Shoot', [
-                        'https://images.unsplash.com/photo-1555215695-3004980ad54e?q=80&w=1600&auto=format&fit=crop'
-                     ])">
-                    <div class="aspect-[4/3] bg-neutral-900">
-                        <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover" alt="BMW M4 CSL">
-                    </div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
-                        <h3 class="font-cinzel text-base md:text-lg font-bold tracking-wider text-white">BMW M4 CSL</h3>
                         <p class="text-[10px] text-neutral-400 tracking-widest uppercase mt-1">View Project →</p>
                     </div>
                 </div>
@@ -171,7 +171,7 @@
                      data-cursor="PLAY FILM"
                      onclick="openVideoModal('https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'COMMERCIAL REEL 2026')">
                     <div class="aspect-video bg-neutral-900 relative">
-                        <img src="./lamborghini gallardo-1.jpg" 
+                        <img src="./drift night-71.jpg" 
                              onerror="this.src='./hero.jpg';" 
                              class="w-full h-full object-cover brightness-75" 
                              alt="Commercial Reel">
