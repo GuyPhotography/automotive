@@ -18,16 +18,21 @@
         }
         .font-cinzel { font-family: 'Cinzel', serif; }
 
-        /* Custom Cursor for desktop devices only */
+        /* Custom Wheel Cursor for desktop devices only */
         @media (pointer: fine) {
             body { cursor: none; }
-            #cursor-dot {
-                width: 8px; height: 8px; background-color: #ffffff; border-radius: 50%;
-                position: fixed; pointer-events: none; z-index: 9999;
-                transform: translate(-50%, -50%); transition: transform 0.1s ease;
+            #cursor-wheel {
+                width: 24px;
+                height: 24px;
+                position: fixed;
+                pointer-events: none;
+                z-index: 9999;
+                transform: translate(-50%, -50%);
+                transition: transform 0.08s linear;
+                filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.3));
             }
             #cursor-ring {
-                width: 40px; height: 40px; border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 50%;
+                width: 44px; height: 44px; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 50%;
                 position: fixed; pointer-events: none; z-index: 9998;
                 transform: translate(-50%, -50%); transition: transform 0.15s ease-out, width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
                 display: flex; align-items: center; justify-content: center;
@@ -38,12 +43,12 @@
             }
             body.hover-target #cursor-ring { width: 85px; height: 85px; background-color: #ffffff; border-color: #ffffff; }
             body.hover-target #cursor-text { opacity: 1; }
-            body.hover-target #cursor-dot { opacity: 0; }
+            body.hover-target #cursor-wheel { opacity: 0; }
         }
 
         /* Disable custom cursor on touch devices */
         @media (pointer: coarse) {
-            #cursor-dot, #cursor-ring { display: none !important; }
+            #cursor-wheel, #cursor-ring { display: none !important; }
             body { cursor: auto !important; }
         }
 
@@ -65,7 +70,18 @@
 </head>
 <body class="selection:bg-white selection:text-black">
 
-    <div id="cursor-dot"></div>
+    <div id="cursor-wheel">
+        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-white">
+            <circle cx="50" cy="50" r="46" stroke="currentColor" stroke-width="8" />
+            <circle cx="50" cy="50" r="38" stroke="currentColor" stroke-width="3" stroke-dasharray="3 3" />
+            <circle cx="50" cy="50" r="10" fill="currentColor" />
+            <line x1="50" y1="50" x2="50" y2="12" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+            <line x1="50" y1="50" x2="86" y2="38" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+            <line x1="50" y1="50" x2="72" y2="81" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+            <line x1="50" y1="50" x2="28" y2="81" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+            <line x1="50" y1="50" x2="14" y2="38" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+        </svg>
+    </div>
     <div id="cursor-ring"><span id="cursor-text">VIEW</span></div>
 
     <header class="fixed top-0 left-0 w-full z-40 mix-blend-difference px-6 md:px-12 py-5 md:py-6 flex justify-between items-center">
@@ -146,4 +162,25 @@
 
                 <div class="card-image-wrapper group cursor-pointer hover-trigger" 
                      data-cursor="VIEW PROJECT"
-                     onclick="openProjectModal
+                     onclick="openProjectModal('LAMBORGHINI GALLARDO', 'Street Shoot', [
+                        './lamborghini gallardo-1.jpg'
+                     ])">
+                    <div class="aspect-[4/3] bg-neutral-900">
+                        <img src="./lamborghini gallardo-1.jpg" class="w-full h-full object-cover" alt="Lamborghini Gallardo">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 md:p-6 flex flex-col justify-end">
+                        <h3 class="font-cinzel text-sm md:text-lg font-bold tracking-wider text-white">LAMBORGHINI GALLARDO</h3>
+                        <p class="text-[9px] md:text-[10px] text-neutral-400 tracking-widest uppercase mt-1">View Project →</p>
+                    </div>
+                </div>
+
+                <div class="card-image-wrapper group cursor-pointer hover-trigger" 
+                     data-cursor="VIEW PROJECT"
+                     onclick="openProjectModal('FERRARI F8 TRIBUTO', 'Sunset Dynamic Motion', [
+                        'https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1600&auto=format&fit=crop'
+                     ])">
+                    <div class="aspect-[4/3] bg-neutral-900">
+                        <img src="https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover" alt="Ferrari F8 Tributo">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 md:p-6 flex flex-col justify-end">
+                        <h3 class="font-cinzel text-sm md:text-lg font-bold tracking-wider text-white">FERRARI F8 TRIBUTO</h3>
