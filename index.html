@@ -18,6 +18,21 @@
         }
         .font-cinzel { font-family: 'Cinzel', serif; }
 
+        /* Smooth Mobile Fade Transitions */
+        .fade-transition {
+            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .fade-hidden {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+        }
+        .fade-visible {
+            opacity: 1 !important;
+            visibility: visible !important;
+            pointer-events: auto !important;
+        }
+
         /* Custom Wheel Cursor for desktop devices only */
         @media (pointer: fine) {
             body { cursor: none; }
@@ -59,8 +74,16 @@
             body { cursor: auto !important; }
         }
 
-        /* Image hover effect */
-        .card-image-wrapper { overflow: hidden; position: relative; }
+        /* Image hover & active press effect for Mobile */
+        .card-image-wrapper { 
+            overflow: hidden; 
+            position: relative; 
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+        .card-image-wrapper:active {
+            transform: scale(0.98);
+            opacity: 0.9;
+        }
         .card-image-wrapper img { transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
         @media (pointer: fine) {
             .card-image-wrapper:hover img { transform: scale(1.06); }
@@ -101,18 +124,18 @@
             <a href="#contact" class="hover:text-neutral-400 transition-colors">Contact</a>
         </nav>
 
-        <button id="menu-btn" onclick="toggleMobileMenu()" class="md:hidden text-white focus:outline-none z-50 p-2">
+        <button id="menu-btn" onclick="toggleMobileMenu()" class="md:hidden text-white focus:outline-none z-50 p-2 active:scale-95 transition-transform">
             <svg id="menu-icon" class="w-6 h-6 fill-current" viewBox="0 0 24 24">
                 <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
             </svg>
         </button>
     </header>
 
-    <div id="mobile-menu" class="fixed inset-0 bg-black/95 backdrop-blur-xl z-30 hidden flex flex-col justify-center items-center space-y-8 text-center p-6">
-        <a href="#stills" onclick="toggleMobileMenu()" class="font-cinzel text-2xl tracking-[0.2em] text-white uppercase">Stills</a>
-        <a href="#video" onclick="toggleMobileMenu()" class="font-cinzel text-2xl tracking-[0.2em] text-white uppercase">Video</a>
-        <a href="#about" onclick="toggleMobileMenu()" class="font-cinzel text-2xl tracking-[0.2em] text-white uppercase">About</a>
-        <a href="#contact" onclick="toggleMobileMenu()" class="font-cinzel text-2xl tracking-[0.2em] text-white uppercase">Contact</a>
+    <div id="mobile-menu" class="fixed inset-0 bg-black/95 backdrop-blur-xl z-30 fade-transition fade-hidden flex flex-col justify-center items-center space-y-8 text-center p-6">
+        <a href="#stills" onclick="toggleMobileMenu()" class="font-cinzel text-2xl tracking-[0.2em] text-white uppercase active:opacity-60 transition-opacity">Stills</a>
+        <a href="#video" onclick="toggleMobileMenu()" class="font-cinzel text-2xl tracking-[0.2em] text-white uppercase active:opacity-60 transition-opacity">Video</a>
+        <a href="#about" onclick="toggleMobileMenu()" class="font-cinzel text-2xl tracking-[0.2em] text-white uppercase active:opacity-60 transition-opacity">About</a>
+        <a href="#contact" onclick="toggleMobileMenu()" class="font-cinzel text-2xl tracking-[0.2em] text-white uppercase active:opacity-60 transition-opacity">Contact</a>
     </div>
 
     <section class="relative h-screen w-full overflow-hidden flex items-end pb-12 md:pb-20 px-6 md:px-16">
@@ -244,21 +267,21 @@
             <span class="text-[10px] font-mono uppercase tracking-[0.3em] text-neutral-500 block mb-3">04 / INQUIRIES</span>
             <h2 class="font-cinzel text-3xl md:text-6xl font-bold tracking-wide mb-8">LET'S CREATE</h2>
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=guyrdt1@gmail.com" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-8 py-4 bg-white text-black text-xs font-semibold tracking-[0.2em] uppercase">guyrdt1@gmail.com</a>
-                <a href="https://www.instagram.com/guy.rdt/" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-8 py-4 border border-neutral-800 text-white text-xs font-semibold tracking-[0.2em] uppercase hover:bg-neutral-900 transition-colors">Instagram ↗</a>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=guyrdt1@gmail.com" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-8 py-4 bg-white text-black text-xs font-semibold tracking-[0.2em] uppercase active:scale-95 transition-transform">guyrdt1@gmail.com</a>
+                <a href="https://www.instagram.com/guy.rdt/" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-8 py-4 border border-neutral-800 text-white text-xs font-semibold tracking-[0.2em] uppercase hover:bg-neutral-900 active:scale-95 transition-all">Instagram ↗</a>
             </div>
             <p class="text-[9px] md:text-[10px] text-neutral-600 tracking-widest uppercase mt-16 md:mt-20">© GUY ARDITI. ALL RIGHTS RESERVED.</p>
         </div>
     </section>
 
-    <div id="drift-night-page" class="fixed inset-0 z-50 bg-[#0a0a0a] hidden overflow-y-auto">
+    <div id="drift-night-page" class="fixed inset-0 z-50 bg-[#0a0a0a] fade-transition fade-hidden overflow-y-auto">
         
         <div class="sticky top-0 left-0 w-full z-50 bg-[#0a0a0a]/90 backdrop-blur-md px-6 md:px-12 py-5 border-b border-neutral-800 flex justify-between items-center">
             <div>
                 <span class="text-[9px] font-mono uppercase tracking-[0.3em] text-neutral-500 block">PROJECT GALLERY</span>
                 <h2 class="font-cinzel text-base md:text-xl font-bold text-white tracking-wider">DRIFT NIGHT ACTION</h2>
             </div>
-            <button onclick="closeDriftNightPage()" class="hover-trigger text-white text-xs px-4 py-2 border border-neutral-700 hover:bg-white hover:text-black transition-colors uppercase tracking-widest" data-cursor="CLOSE">
+            <button onclick="closeDriftNightPage()" class="hover-trigger text-white text-xs px-4 py-2 border border-neutral-700 hover:bg-white hover:text-black active:scale-95 transition-all uppercase tracking-widest" data-cursor="CLOSE">
                 ← Back to Portfolio
             </button>
         </div>
@@ -304,7 +327,7 @@
             </div>
 
             <div class="text-center pt-16 pb-8 border-t border-neutral-900">
-                <button onclick="closeDriftNightPage()" class="px-10 py-5 bg-white text-black text-xs font-semibold tracking-[0.2em] uppercase hover:bg-neutral-200 transition-colors">
+                <button onclick="closeDriftNightPage()" class="px-10 py-5 bg-white text-black text-xs font-semibold tracking-[0.2em] uppercase hover:bg-neutral-200 active:scale-95 transition-all">
                     ← Back to Main Portfolio
                 </button>
             </div>
@@ -312,22 +335,22 @@
         </div>
     </div>
 
-    <div id="project-modal" class="fixed inset-0 z-50 modal-blur hidden flex flex-col justify-between p-4 md:p-12 overflow-y-auto">
+    <div id="project-modal" class="fixed inset-0 z-50 modal-blur fade-transition fade-hidden flex flex-col justify-between p-4 md:p-12 overflow-y-auto">
         <div class="flex justify-between items-center border-b border-neutral-800 pb-4">
             <div>
                 <h3 id="modal-title" class="font-cinzel text-base md:text-xl font-bold text-white"></h3>
                 <p id="modal-subtitle" class="text-[9px] md:text-[10px] text-neutral-400 tracking-widest uppercase"></p>
             </div>
-            <button onclick="closeProjectModal()" class="text-white text-xs px-3 py-1.5 md:px-4 md:py-2 border border-neutral-800">Close ✕</button>
+            <button onclick="closeProjectModal()" class="text-white text-xs px-3 py-1.5 md:px-4 md:py-2 border border-neutral-800 active:scale-95 transition-transform">Close ✕</button>
         </div>
         <div id="modal-images" class="my-6 md:my-8 space-y-4 md:space-y-6 max-w-4xl mx-auto w-full"></div>
     </div>
 
-    <div id="video-modal" class="fixed inset-0 z-50 modal-blur hidden flex items-center justify-center p-3 md:p-4">
+    <div id="video-modal" class="fixed inset-0 z-50 modal-blur fade-transition fade-hidden flex items-center justify-center p-3 md:p-4">
         <div class="relative w-full max-w-4xl bg-black border border-neutral-800 p-2">
             <div class="flex justify-between items-center mb-2 px-2">
                 <span id="video-title" class="font-cinzel text-xs font-bold text-white"></span>
-                <button onclick="closeVideoModal()" class="text-white text-xs">Close ✕</button>
+                <button onclick="closeVideoModal()" class="text-white text-xs active:scale-95 transition-transform">Close ✕</button>
             </div>
             <video id="native-video-player" controls playsinline class="w-full aspect-video bg-black">
                 <source src="" type="video/mp4">
@@ -343,28 +366,33 @@
         const heroBg = document.getElementById('hero-bg');
         const mobileMenu = document.getElementById('mobile-menu');
 
-        /* Mobile Menu Toggle */
+        /* Mobile Menu Toggle With Fade */
         function toggleMobileMenu() {
-            const isOpen = !mobileMenu.classList.contains('hidden');
-            if (isOpen) {
-                mobileMenu.classList.add('hidden');
-                document.body.style.overflow = 'auto';
-            } else {
-                mobileMenu.classList.remove('hidden');
+            const isHidden = mobileMenu.classList.contains('fade-hidden');
+            if (isHidden) {
+                mobileMenu.classList.remove('fade-hidden');
+                mobileMenu.classList.add('fade-visible');
                 document.body.style.overflow = 'hidden';
+            } else {
+                mobileMenu.classList.remove('fade-visible');
+                mobileMenu.classList.add('fade-hidden');
+                document.body.style.overflow = 'auto';
             }
         }
 
-        /* Full Page Navigation for Drift Night Action */
+        /* Full Page Navigation for Drift Night Action With Fade */
         function openDriftNightPage() {
             const page = document.getElementById('drift-night-page');
-            page.classList.remove('hidden');
+            page.classList.remove('fade-hidden');
+            page.classList.add('fade-visible');
             document.body.style.overflow = 'hidden';
             page.scrollTop = 0;
         }
 
         function closeDriftNightPage() {
-            document.getElementById('drift-night-page').classList.add('hidden');
+            const page = document.getElementById('drift-night-page');
+            page.classList.remove('fade-visible');
+            page.classList.add('fade-hidden');
             document.body.style.overflow = 'auto';
         }
 
@@ -437,12 +465,16 @@
                 img.src = src; img.className = 'w-full h-auto border border-neutral-800';
                 container.appendChild(img);
             });
-            document.getElementById('project-modal').classList.remove('hidden');
+            const modal = document.getElementById('project-modal');
+            modal.classList.remove('fade-hidden');
+            modal.classList.add('fade-visible');
             document.body.style.overflow = 'hidden';
         }
 
         function closeProjectModal() {
-            document.getElementById('project-modal').classList.add('hidden');
+            const modal = document.getElementById('project-modal');
+            modal.classList.remove('fade-visible');
+            modal.classList.add('fade-hidden');
             document.body.style.overflow = 'auto';
         }
 
@@ -450,7 +482,9 @@
             const player = document.getElementById('native-video-player');
             document.getElementById('video-title').innerText = title;
             player.src = videoSrc;
-            document.getElementById('video-modal').classList.remove('hidden');
+            const modal = document.getElementById('video-modal');
+            modal.classList.remove('fade-hidden');
+            modal.classList.add('fade-visible');
             player.play();
             document.body.style.overflow = 'hidden';
         }
@@ -458,7 +492,9 @@
         function closeVideoModal() {
             const player = document.getElementById('native-video-player');
             player.pause(); player.src = '';
-            document.getElementById('video-modal').classList.add('hidden');
+            const modal = document.getElementById('video-modal');
+            modal.classList.remove('fade-visible');
+            modal.classList.add('fade-hidden');
             document.body.style.overflow = 'auto';
         }
     </script>
