@@ -18,6 +18,14 @@
         }
         .font-cinzel { font-family: 'Cinzel', serif; }
 
+        /* Smooth Parallax GPU Acceleration */
+        .parallax-container {
+            will-change: transform;
+            transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+
         /* Custom Cursor for desktop devices only */
         @media (pointer: fine) {
             body { cursor: none; }
@@ -98,8 +106,8 @@
     </div>
 
     <!-- Hero Section -->
-    <section class="relative h-[100dvh] w-full overflow-hidden flex items-end pb-12 md:pb-20 px-6 md:px-16">
-        <div id="hero-bg" class="absolute inset-0 w-full h-full z-0 scale-105 will-change-transform">
+    <section class="relative min-h-[100dvh] w-full overflow-hidden flex items-end pb-12 md:pb-20 px-6 md:px-16">
+        <div id="hero-bg" class="absolute inset-0 w-full h-[120%] -top-[10%] z-0 parallax-container">
             <img id="hero-img"
                  src="./Hero shot.jpg" 
                  onerror="if(this.src.indexOf('hero%20shot.jpg') !== -1){ this.src='./hero shot.jpg'; } else if(this.src.indexOf('hero.jpg') === -1){ this.src='./hero.jpg'; }"
@@ -115,7 +123,7 @@
     </section>
 
     <!-- Stills Section -->
-    <section id="stills" class="py-16 md:py-28 px-6 md:px-16 border-t border-neutral-900">
+    <section id="stills" class="py-16 md:py-28 px-6 md:px-16 border-t border-neutral-900 relative z-10 bg-[#0a0a0a]">
         <div class="max-w-7xl mx-auto">
             <div class="mb-8 md:mb-16">
                 <span class="text-[10px] font-mono uppercase tracking-[0.3em] text-neutral-500 block mb-2">01 / SELECTED WORK</span>
@@ -179,7 +187,7 @@
     </section>
 
     <!-- Video Section -->
-    <section id="video" class="py-16 md:py-28 px-6 md:px-16 border-t border-neutral-900 bg-black">
+    <section id="video" class="py-16 md:py-28 px-6 md:px-16 border-t border-neutral-900 bg-black relative z-10">
         <div class="max-w-7xl mx-auto">
             <div class="mb-8 md:mb-16">
                 <span class="text-[10px] font-mono uppercase tracking-[0.3em] text-neutral-500 block mb-2">02 / CINEMATIC REELS</span>
@@ -212,7 +220,7 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-16 md:py-28 px-6 md:px-16 border-t border-neutral-900">
+    <section id="about" class="py-16 md:py-28 px-6 md:px-16 border-t border-neutral-900 relative z-10 bg-[#0a0a0a]">
         <div class="max-w-4xl mx-auto">
             <span class="text-[10px] font-mono uppercase tracking-[0.3em] text-neutral-500 block mb-3">03 / STATEMENT</span>
             <h2 class="font-cinzel text-2xl md:text-5xl font-bold tracking-wide mb-6 md:mb-8">DRIVEN BY MOTION</h2>
@@ -226,7 +234,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-16 md:py-28 px-6 md:px-16 border-t border-neutral-900 bg-black">
+    <section id="contact" class="py-16 md:py-28 px-6 md:px-16 border-t border-neutral-900 bg-black relative z-10">
         <div class="max-w-4xl mx-auto text-center">
             <span class="text-[10px] font-mono uppercase tracking-[0.3em] text-neutral-500 block mb-3">04 / INQUIRIES</span>
             <h2 class="font-cinzel text-3xl md:text-6xl font-bold tracking-wide mb-8">LET'S CREATE</h2>
@@ -283,15 +291,28 @@
             }
         }
 
-        /* Parallax effect (Desktop only to prevent mobile lag) */
-        if (window.matchMedia('(pointer: fine)').matches) {
-            window.addEventListener('scroll', () => {
-                const scrollY = window.scrollY;
-                if (heroBg && scrollY <= window.innerHeight) {
-                    heroBg.style.transform = `translateY(${scrollY * 0.4}px) scale(1.05)`;
-                }
-            });
+        /* Highly Optimized Smooth Parallax Script for All Devices (Mobile Included) */
+        let latestScrollY = 0;
+        let ticking = false;
 
+        function updateParallax() {
+            if (heroBg && latestScrollY <= window.innerHeight * 1.2) {
+                const translateY = latestScrollY * 0.35;
+                heroBg.style.transform = `translate3d(0, ${translateY}px, 0)`;
+            }
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', () => {
+            latestScrollY = window.scrollY;
+            if (!ticking) {
+                window.requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
+        }, { passive: true });
+
+        /* Desktop Cursor Handler */
+        if (window.matchMedia('(pointer: fine)').matches) {
             window.addEventListener('mousemove', (e) => {
                 if (cursorDot) {
                     cursorDot.style.left = `${e.clientX}px`; cursorDot.style.top = `${e.clientY}px`;
